@@ -17,27 +17,29 @@ class ShoppingList extends Component {
 
     render() {
         const { items } = this.props.item;
+        const itemList = items.map(({_id, name}) => {
+            return (
+                <CSSTransition timeout={500} classNames="fade" key={_id}>
+                    <ListGroupItem>
+                        <Button
+                            className="remove-btn"
+                            color="danger"
+                            size="sm"
+                            onClick={this.onDeleteClick.bind(this, _id)}
+                        >
+                        &times;
+                        </Button>
+                        {name}
+                    </ListGroupItem>
+                </CSSTransition>
+            );
+        });
+
         return(
             <Container>
                 <ListGroup>
                     <TransitionGroup className="shopping-list">
-                    {items.map(({id, name}) => {
-                        return(
-                            <CSSTransition key={id} timeout={500} classNames="fade">
-                                <ListGroupItem>
-                                    <Button
-                                        className="remove-btn"
-                                        color="danger"
-                                        size="sm"
-                                        onClick={this.onDeleteClick.bind(this, id)}
-                                    >
-                                    &times;
-                                    </Button>
-                                    {name}
-                                </ListGroupItem>
-                            </CSSTransition>
-                        )
-                    })}
+                        {itemList}
                     </TransitionGroup>
                 </ListGroup>
             </Container>
